@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plant Growers - Boss Battle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #e8f5e9;
+      --card-bg: #ffffff;
+      --primary-green: #2d6a4f;
+      --accent-leaf: #52b788;
+      --pot-terra: #d97736;
+      --bee-yellow: #ffb703;
+      --bee-black: #212529;
+      --text: #1b4332;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Fredoka', cursive, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      background: linear-gradient(180deg, #d8f3dc 0%, #b7e4c7 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      max-width: 1100px;
+      margin: 0 auto 16px auto;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 24px rgba(45, 106, 79, 0.15);
+      border: 3px solid #74c69d;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #52b788, #2d6a4f);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 4px 10px rgba(45, 106, 79, 0.3);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 32px;
+      letter-spacing: 1.5px;
+      color: var(--primary-green);
+      line-height: 1;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #40916c;
+      font-weight: 700;
+    }
+
+    /* Portal Bar */
+    .portal-bar {
+      max-width: 1100px;
+      margin: 0 auto 16px auto;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .portal-btn {
+      background: #ffffff;
+      border: 2px solid #52b788;
+      border-radius: 16px;
+      padding: 10px 20px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      color: var(--primary-green);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .portal-btn.active {
+      background: var(--primary-green);
+      color: #fff;
+      border-color: var(--primary-green);
+      box-shadow: 0 4px 12px rgba(45, 106, 79, 0.25);
+    }
+
+    /* Boss Battle Arena */
+    .boss-arena {
+      max-width: 1100px;
+      margin: 0 auto 20px auto;
+      background: radial-gradient(circle at center, #fff9db 0%, #ffec99 100%);
+      border: 4px solid #f59f00;
+      border-radius: 24px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 25px rgba(245, 159, 0, 0.2);
+    }
+
+    .boss-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .bee-sprite {
+      width: 90px;
+      height: 90px;
+      animation: hoverBee 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes hoverBee {
+      0% { transform: translateY(0) rotate(-3deg); }
+      100% { transform: translateY(-10px) rotate(4deg); }
+    }
+
+    .boss-meta h3 {
+      margin: 0;
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 26px;
+      color: #e67700;
+      letter-spacing: 1px;
+    }
+
+    .hp-bar-container {
+      width: 260px;
+      height: 20px;
+      background: rgba(0,0,0,0.15);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 6px;
+      border: 2px solid #e67700;
+    }
+
+    .hp-bar-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #ff6b6b, #fa5252);
+      transition: width 0.3s ease;
+    }
+
+    .boss-btn {
+      background: #f59f00;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 16px;
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 20px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(245, 159, 0, 0.4);
+      transition: transform 0.1s ease;
+    }
+
+    .boss-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Garden Grid */
+    .garden-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .plant-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 16px;
+      text-align: center;
+      border: 3px solid #b7e4c7;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .plant-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-leaf);
+      box-shadow: 0 10px 20px rgba(82, 183, 136, 0.2);
+    }
+
+    .plant-svg-wrap {
+      width: 110px;
+      height: 125px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .student-name {
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--primary-green);
+      margin-bottom: 6px;
+    }
+
+    .pill-hp {
+      background: #d8f3dc;
+      color: var(--primary-green);
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    /* Modal Question Screen */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(27, 67, 50, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 28px;
+      width: 100%;
+      max-width: 440px;
+      padding: 26px;
+      text-align: center;
+      border: 4px solid #52b788;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .q-text {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--primary-green);
+      margin: 16px 0;
+    }
+
+    .input-box {
+      width: 160px;
+      font-size: 30px;
+      text-align: center;
+      padding: 8px;
+      border: 3px solid #b7e4c7;
+      border-radius: 14px;
+      font-weight: 700;
+      outline: none;
+    }
+
+    .input-box:focus {
+      border-color: var(--primary-green);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn-act {
+      flex: 1;
+      padding: 12px;
+      border-radius: 14px;
+      border: none;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn-submit { background: var(--accent-leaf); color: #fff; }
+    .btn-cancel { background: #e9ecef; color: #495057; }
+
+    .feedback-zone {
+      min-height: 24px;
+      font-weight: 700;
+      font-size: 15px;
+      margin-top: 14px;
+    }
+    .feedback-zone.good { color: #2d6a4f; }
+    .feedback-zone.bad { color: #d90429; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">&#127793;</div>
+      <div>
+        <h1>Plant Growers</h1>
+        <div class="subtitle">By Will, Luca &amp; Odin &bull; Grow Your Plant &amp; Defeat the Bees!</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Subject Portals -->
+  <div class="portal-bar">
+    <button class="portal-btn active" id="portal-maths" onclick="switchSubject('Maths')">&#128290; Portal: Maths</button>
+    <button class="portal-btn" id="portal-spell" onclick="switchSubject('Spelling')">&#128218; Portal: Spelling</button>
+    <button class="portal-btn" id="portal-sci" onclick="switchSubject('Science')">&#9883; Portal: Science</button>
+  </div>
+
+  <!-- Giant Bee Boss Battle -->
+  <div class="boss-arena">
+    <div class="boss-left">
+      <svg class="bee-sprite" viewBox="0 0 100 100">
+        <!-- Bee Wings -->
+        <ellipse cx="40" cy="30" rx="16" ry="24" fill="#a0c4ff" opacity="0.7" transform="rotate(-30 40 30)"/>
+        <ellipse cx="60" cy="28" rx="14" ry="22" fill="#a0c4ff" opacity="0.7" transform="rotate(20 60 28)"/>
+        <!-- Bee Body & Stripes -->
+        <ellipse cx="50" cy="56" rx="28" ry="22" fill="#ffb703" stroke="#212529" stroke-width="3"/>
+        <path d="M 42 36 L 42 76 M 52 34 L 52 78 M 62 36 L 62 76" stroke="#212529" stroke-width="5" stroke-linecap="round"/>
+        <!-- Stinger -->
+        <polygon points="22,56 12,53 12,59" fill="#212529"/>
+        <!-- Eyes & Antenna -->
+        <circle cx="70" cy="50" r="5" fill="#ffffff"/>
+        <circle cx="72" cy="50" r="2.5" fill="#000"/>
+        <path d="M 68 40 Q 75 30 80 32" stroke="#212529" stroke-width="2.5" fill="none"/>
+      </svg>
+      <div class="boss-meta">
+        <h3 id="bossTitle">QUEEN BUZZ-BEE (BOSS)</h3>
+        <div class="hp-bar-container">
+          <div class="hp-bar-fill" id="bossHpFill"></div>
+        </div>
+        <div style="font-size: 13px; font-weight: 700; color: #b06200; margin-top: 4px;" id="bossHpText">HP: 100 / 100</div>
+      </div>
+    </div>
+    <button class="boss-btn" onclick="startClassBattle()">&#9876; CLASS ATTACK!</button>
+  </div>
+
+  <!-- Garden Plant Grid -->
+  <main class="garden-grid" id="gardenGrid"></main>
+
+  <!-- Challenge Modal -->
+  <div class="modal-overlay" id="quizModal">
+    <div class="modal-box">
+      <h2 id="modalStudent" style="margin: 0; color: var(--primary-green); font-size: 24px;"></h2>
+      <p style="color: #52b788; margin: 4px 0 0 0;" id="modalSubjectSub">Solve the question to grow your plant &amp; sting the bee!</p>
+
+      <div class="q-text" id="qPrompt">30 + 25 = ?</div>
+      <input type="text" id="answerInput" class="input-box" autocomplete="off">
+
+      <div class="actions">
+        <button class="btn-act btn-cancel" onclick="closeModal()">Back</button>
+        <button class="btn-act btn-submit" onclick="checkAnswer()">Water &amp; Attack!</button>
+      </div>
+
+      <div class="feedback-zone" id="fbZone"></div>
+    </div>
+  </div>
+
+  <script>
+    let currentSubject = "Maths";
+    let bossHp = 100;
+    const maxBossHp = 100;
+    let activeStudent = null;
+    let expectedAnswer = "";
+
+    const students = [
+      { id: 1, name: "Will", hp: 30, warnings: 0, flowerColor: "#ff4d6d" },
+      { id: 2, name: "Luca", hp: 28, warnings: 0, flowerColor: "#ffd166" },
+      { id: 3, name: "Odin", hp: 25, warnings: 0, flowerColor: "#06d6a0" },
+      { id: 4, name: "Student 1", hp: 19, warnings: 0, flowerColor: "#8338ec" },
+      { id: 5, name: "Student 2", hp: 21, warnings: 0, flowerColor: "#ff758f" },
+      { id: 6, name: "Student 3", hp: 23, warnings: 0, flowerColor: "#3a86ff" }
+    ];
+
+    // SVG Plant that evolves based on HP (sprout -> bud -> big flower)
+    function renderPlantSVG(hp, flowerColor) {
+      let plantTop = "";
+      if (hp < 20) {
+        // Stage 1: Little Sprout
+        plantTop = `
+          <path d="M 50 78 Q 45 60 50 48" stroke="#52b788" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="44" cy="50" rx="8" ry="4" fill="#52b788" transform="rotate(-30 44 50)"/>
+          <ellipse cx="56" cy="46" rx="8" ry="4" fill="#52b788" transform="rotate(30 56 46)"/>
+        `;
+      } else if (hp < 26) {
+        // Stage 2: Tall Stem with Bud
+        plantTop = `
+          <path d="M 50 78 Q 44 55 50 36" stroke="#52b788" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <ellipse cx="38" cy="54" rx="10" ry="5" fill="#52b788" transform="rotate(-35 38 54)"/>
+          <ellipse cx="62" cy="50" rx="10" ry="5" fill="#52b788" transform="rotate(35 62 50)"/>
+          <!-- Bud -->
+          <circle cx="50" cy="30" r="10" fill="${flowerColor}" />
+        `;
+      } else {
+        // Stage 3: Full Flower (from the boys' Boss Screen sketch)
+        plantTop = `
+          <path d="M 50 78 Q 42 50 50 30" stroke="#52b788" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <ellipse cx="36" cy="56" rx="11" ry="6" fill="#52b788" transform="rotate(-35 36 56)"/>
+          <ellipse cx="64" cy="50" rx="11" ry="6" fill="#52b788" transform="rotate(35 64 50)"/>
+          <!-- Petals -->
+          <circle cx="42" cy="22" r="8" fill="${flowerColor}" />
+          <circle cx="58" cy="22" r="8" fill="${flowerColor}" />
+          <circle cx="50" cy="14" r="8" fill="${flowerColor}" />
+          <circle cx="50" cy="30" r="8" fill="${flowerColor}" />
+          <!-- Center Face -->
+          <circle cx="50" cy="22" r="7" fill="#ffe494" />
+          <circle cx="48" cy="21" r="1.5" fill="#333" /><circle cx="52" cy="21" r="1.5" fill="#333" />
+        `;
+      }
+
+      return `
+        <svg viewBox="0 0 100 115" width="95" height="110">
+          ${plantTop}
+          <!-- Flowerpot labeled with HP like in their sketch -->
+          <polygon points="28,78 72,78 66,110 34,110" fill="#d97736" stroke="#b0571f" stroke-width="2"/>
+          <rect x="25" y="74" width="50" height="7" rx="3" fill="#e88544" stroke="#b0571f" stroke-width="2"/>
+          <text x="50" y="98" font-family="'Fredoka', sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">${hp} HP</text>
+        </svg>
+      `;
+    }
+
+    function renderGarden() {
+      const grid = document.getElementById('gardenGrid');
+      grid.innerHTML = '';
+
+      students.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'plant-card';
+        card.onclick = () => openChallenge(s);
+
+        card.innerHTML = `
+          <div class="plant-svg-wrap">
+            ${renderPlantSVG(s.hp, s.flowerColor)}
+          </div>
+          <div class="student-name">${s.name}</div>
+          <div class="pill-hp">&#9752; ${s.hp} Growth HP</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function switchSubject(subject) {
+      currentSubject = subject;
+      document.querySelectorAll('.portal-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.includes(subject));
+      });
+    }
+
+    function openChallenge(student) {
+      activeStudent = student;
+      document.getElementById('modalStudent').textContent = `${student.name}'s Plant Challenge`;
+      document.getElementById('modalSubjectSub').textContent = `Portal: ${currentSubject} • Correct answer damages the Bee!`;
+      document.getElementById('fbZone').textContent = '';
+      document.getElementById('answerInput').value = '';
+
+      setupQuestion();
+      document.getElementById('quizModal').classList.add('active');
+      setTimeout(() => document.getElementById('answerInput').focus(), 100);
+    }
+
+    function closeModal() {
+      document.getElementById('quizModal').classList.remove('active');
+    }
+
+    function setupQuestion() {
+      if (currentSubject === "Maths") {
+        // Maths like in their sketch: 30 + 25 = ?
+        const n1 = (Math.floor(Math.random() * 4) + 1) * 10;
+        const n2 = Math.floor(Math.random() * 25) + 10;
+        expectedAnswer = (n1 + n2).toString();
+        document.getElementById('qPrompt').textContent = `${n1} + ${n2} = ?`;
+      } else if (currentSubject === "Spelling") {
+        const words = [
+          { clue: "Opposite of cold", ans: "hot" },
+          { clue: "A yellow buzzing bug", ans: "bee" },
+          { clue: "Plants grow in...", ans: "soil" },
+          { clue: "What gives plants light?", ans: "sun" }
+        ];
+        const chosen = words[Math.floor(Math.random() * words.length)];
+        expectedAnswer = chosen.ans.toLowerCase();
+        document.getElementById('qPrompt').textContent = chosen.clue;
+      } else { // Science
+        const sci = [
+          { q: "Do plants need sunlight? (yes/no)", ans: "yes" },
+          { q: "What do bees collect? (pollen/juice)", ans: "pollen" }
+        ];
+        const chosen = sci[Math.floor(Math.random() * sci.length)];
+        expectedAnswer = chosen.ans.toLowerCase();
+        document.getElementById('qPrompt').textContent = chosen.q;
+      }
+    }
+
+    function checkAnswer() {
+      const val = document.getElementById('answerInput').value.trim().toLowerCase();
+      const fb = document.getElementById('fbZone');
+
+      if (!val) return;
+
+      if (val === expectedAnswer) {
+        // Feed plant & damage bee
+        activeStudent.hp += 3;
+        bossHp = Math.max(0, bossHp - 15);
+        updateBossUI();
+        renderGarden();
+
+        fb.className = 'feedback-zone good';
+        fb.textContent = 'Plant watered! +3 Growth HP and dealt 15 DMG to the Bee!';
+        setTimeout(closeModal, 1200);
+      } else {
+        activeStudent.warnings++;
+        fb.className = 'feedback-zone bad';
+        fb.textContent = `Oops! The answer was: ${expectedAnswer}`;
+        setTimeout(closeModal, 1500);
+      }
+    }
+
+    function updateBossUI() {
+      const fill = document.getElementById('bossHpFill');
+      const pct = (bossHp / maxBossHp) * 100;
+      fill.style.width = `${pct}%`;
+      document.getElementById('bossHpText').textContent = `HP: ${bossHp} / ${maxBossHp}`;
+
+      if (bossHp === 0) {
+        document.getElementById('bossTitle').textContent = '🎉 BOSS BEE DEFEATED! 🎉';
+      }
+    }
+
+    function startClassBattle() {
+      // Quick all-student team trigger
+      const randStudent = students[Math.floor(Math.random() * students.length)];
+      openChallenge(randStudent);
+    }
+
+    document.getElementById('answerInput').addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') checkAnswer();
+    });
+
+    renderGarden();
+    updateBossUI();
+  </script>
+</body>
+</html>
