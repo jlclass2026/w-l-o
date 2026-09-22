@@ -2,26 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Plant Growers - Boss Battle</title>
+  <title>Plant Evolution</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #e8f5e9;
+      --bg: #d8f3dc;
       --card-bg: #ffffff;
       --primary-green: #2d6a4f;
       --accent-leaf: #52b788;
-      --pot-terra: #d97736;
       --bee-yellow: #ffb703;
-      --bee-black: #212529;
       --text: #1b4332;
     }
 
     * {
       box-sizing: border-box;
       font-family: 'Fredoka', cursive, sans-serif;
+      user-select: none;
     }
 
     body {
@@ -34,10 +33,10 @@
 
     header {
       max-width: 1100px;
-      margin: 0 auto 16px auto;
+      margin: 0 auto 14px auto;
       background: #ffffff;
-      border-radius: 24px;
-      padding: 14px 24px;
+      border-radius: 22px;
+      padding: 12px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -48,109 +47,95 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .brand-icon {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       background: linear-gradient(135deg, #52b788, #2d6a4f);
-      border-radius: 16px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      font-size: 26px;
       box-shadow: 0 4px 10px rgba(45, 106, 79, 0.3);
     }
 
     h1 {
       margin: 0;
       font-family: 'Luckiest Guy', cursive;
-      font-size: 32px;
-      letter-spacing: 1.5px;
+      font-size: 28px;
+      letter-spacing: 1px;
       color: var(--primary-green);
       line-height: 1;
     }
 
-    .subtitle {
-      font-size: 13px;
-      color: #40916c;
-      font-weight: 700;
-    }
-
-    /* Portal Bar */
-    .portal-bar {
-      max-width: 1100px;
-      margin: 0 auto 16px auto;
+    /* Top Toolbar (Add Player, Edit, Save directly from drawing) */
+    .top-toolbar {
       display: flex;
-      gap: 12px;
-      justify-content: center;
-    }
-
-    .portal-btn {
-      background: #ffffff;
-      border: 2px solid #52b788;
-      border-radius: 16px;
-      padding: 10px 20px;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      color: var(--primary-green);
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
       gap: 8px;
     }
 
-    .portal-btn.active {
-      background: var(--primary-green);
-      color: #fff;
-      border-color: var(--primary-green);
-      box-shadow: 0 4px 12px rgba(45, 106, 79, 0.25);
+    .btn-tool {
+      background: #f0fdf4;
+      border: 2px solid #52b788;
+      color: #1b4332;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
 
-    /* Boss Battle Arena */
+    .btn-tool:hover, .btn-tool.active {
+      background: var(--primary-green);
+      color: #fff;
+    }
+
+    /* Boss Arena */
     .boss-arena {
       max-width: 1100px;
-      margin: 0 auto 20px auto;
+      margin: 0 auto 16px auto;
       background: radial-gradient(circle at center, #fff9db 0%, #ffec99 100%);
       border: 4px solid #f59f00;
-      border-radius: 24px;
-      padding: 16px 24px;
+      border-radius: 22px;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 10px 25px rgba(245, 159, 0, 0.2);
     }
 
-    .boss-left {
+    .boss-info-side {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
     }
 
-    .bee-sprite {
-      width: 90px;
-      height: 90px;
-      animation: hoverBee 2s ease-in-out infinite alternate;
+    .boss-sprite-svg {
+      width: 80px;
+      height: 80px;
+      animation: hoverBoss 2s ease-in-out infinite alternate;
     }
 
-    @keyframes hoverBee {
+    @keyframes hoverBoss {
       0% { transform: translateY(0) rotate(-3deg); }
-      100% { transform: translateY(-10px) rotate(4deg); }
+      100% { transform: translateY(-8px) rotate(4deg); }
     }
 
     .boss-meta h3 {
       margin: 0;
       font-family: 'Luckiest Guy', cursive;
-      font-size: 26px;
+      font-size: 24px;
       color: #e67700;
       letter-spacing: 1px;
     }
 
-    .hp-bar-container {
-      width: 260px;
-      height: 20px;
+    .hp-container {
+      width: 250px;
+      height: 18px;
       background: rgba(0,0,0,0.15);
       border-radius: 10px;
       overflow: hidden;
@@ -158,36 +143,31 @@
       border: 2px solid #e67700;
     }
 
-    .hp-bar-fill {
+    .hp-fill {
       height: 100%;
       width: 100%;
       background: linear-gradient(90deg, #ff6b6b, #fa5252);
       transition: width 0.3s ease;
     }
 
-    .boss-btn {
+    .btn-class-raid {
       background: #f59f00;
       color: #fff;
       border: none;
-      padding: 12px 24px;
-      border-radius: 16px;
+      padding: 10px 22px;
+      border-radius: 14px;
       font-family: 'Luckiest Guy', cursive;
-      font-size: 20px;
+      font-size: 19px;
       letter-spacing: 1px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(245, 159, 0, 0.4);
-      transition: transform 0.1s ease;
+      box-shadow: 0 4px 10px rgba(245, 159, 0, 0.4);
     }
 
-    .boss-btn:active {
-      transform: scale(0.96);
-    }
-
-    /* Garden Grid */
+    /* Garden Board */
     .garden-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 14px;
       max-width: 1100px;
       margin: 0 auto;
     }
@@ -195,53 +175,81 @@
     .plant-card {
       background: #ffffff;
       border-radius: 20px;
-      padding: 16px;
+      padding: 14px;
       text-align: center;
       border: 3px solid #b7e4c7;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
       cursor: pointer;
-      transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .plant-card.top-rank {
+      border-color: #f59f00;
+      background: #fffef5;
     }
 
     .plant-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
       border-color: var(--accent-leaf);
-      box-shadow: 0 10px 20px rgba(82, 183, 136, 0.2);
     }
 
-    .plant-svg-wrap {
-      width: 110px;
-      height: 125px;
+    .rank-tag {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #f59f00;
+      display: none;
+    }
+
+    .plant-card.top-rank .rank-tag { display: block; }
+
+    .plant-svg-holder {
+      width: 100px;
+      height: 115px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 8px;
-    }
-
-    .student-name {
-      font-weight: 700;
-      font-size: 17px;
-      color: var(--primary-green);
       margin-bottom: 6px;
     }
 
-    .pill-hp {
-      background: #d8f3dc;
-      color: var(--primary-green);
+    .student-title-input {
       font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 13px;
+      font-size: 15px;
+      color: var(--primary-green);
+      margin-bottom: 6px;
+      text-align: center;
+      background: transparent;
+      border: 1.5px dashed transparent;
+      border-radius: 6px;
+      outline: none;
+      width: 100%;
     }
 
-    /* Modal Question Screen */
+    .student-title-input.editable {
+      border-color: #52b788;
+      background: #f0fdf4;
+    }
+
+    .hp-badge {
+      background: #d8f3dc;
+      color: var(--primary-green);
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+
+    /* Modal Screen */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(27, 67, 50, 0.7);
+      background: rgba(20, 50, 36, 0.7);
       backdrop-filter: blur(4px);
       display: none;
       align-items: center;
@@ -250,70 +258,175 @@
       padding: 16px;
     }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
 
     .modal-box {
       background: #ffffff;
-      border-radius: 28px;
+      border-radius: 26px;
       width: 100%;
-      max-width: 440px;
-      padding: 26px;
+      max-width: 460px;
+      padding: 24px;
       text-align: center;
-      border: 4px solid #52b788;
+      border: 4px solid var(--accent-leaf);
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     }
 
-    .q-text {
-      font-size: 36px;
-      font-weight: 700;
-      color: var(--primary-green);
-      margin: 16px 0;
+    .diff-row {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 12px 0;
     }
 
-    .input-box {
-      width: 160px;
-      font-size: 30px;
+    .chip-diff {
+      background: #f0fdf4;
+      border: 2px solid #b7e4c7;
+      border-radius: 10px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #1b4332;
+    }
+
+    .chip-diff.active {
+      background: var(--primary-green);
+      color: #fff;
+      border-color: var(--primary-green);
+    }
+
+    .question-prompt {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--primary-green);
+      margin: 14px 0;
+    }
+
+    .input-field {
+      width: 150px;
+      font-size: 28px;
       text-align: center;
-      padding: 8px;
+      padding: 6px;
       border: 3px solid #b7e4c7;
-      border-radius: 14px;
+      border-radius: 12px;
       font-weight: 700;
       outline: none;
     }
 
-    .input-box:focus {
-      border-color: var(--primary-green);
-    }
-
-    .actions {
+    .btn-act-row {
       display: flex;
-      gap: 12px;
-      margin-top: 20px;
+      gap: 10px;
+      margin-top: 18px;
     }
 
     .btn-act {
       flex: 1;
       padding: 12px;
-      border-radius: 14px;
+      border-radius: 12px;
       border: none;
+      font-size: 15px;
       font-weight: 700;
-      font-size: 16px;
       cursor: pointer;
     }
 
-    .btn-submit { background: var(--accent-leaf); color: #fff; }
-    .btn-cancel { background: #e9ecef; color: #495057; }
+    .btn-water { background: var(--accent-leaf); color: #fff; }
+    .btn-back { background: #e9ecef; color: #495057; }
 
-    .feedback-zone {
+    .fb-zone {
       min-height: 24px;
       font-weight: 700;
-      font-size: 15px;
-      margin-top: 14px;
+      font-size: 14px;
+      margin-top: 12px;
     }
-    .feedback-zone.good { color: #2d6a4f; }
-    .feedback-zone.bad { color: #d90429; }
+    .fb-zone.good { color: #2d6a4f; }
+    .fb-zone.bad { color: #d90429; }
+
+
+    /* ===== Visual Glow-Up — original game mechanics preserved ===== */
+    body {
+      padding: 22px;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255,255,255,.82) 0 3%, transparent 18%),
+        radial-gradient(circle at 88% 12%, rgba(255,230,140,.35), transparent 22%),
+        linear-gradient(160deg, #e9f8e8 0%, #c9efcf 42%, #a9dfbd 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+    body::before, body::after {
+      content:""; position:fixed; z-index:-1; pointer-events:none; opacity:.22; filter:blur(.2px);
+      width:360px; height:360px; border-radius:50%;
+      background:repeating-radial-gradient(ellipse at center, transparent 0 18px, #2d6a4f 19px 21px, transparent 22px 38px);
+    }
+    body::before { left:-210px; bottom:-170px; transform:rotate(18deg); }
+    body::after { right:-220px; top:-180px; transform:rotate(-28deg); }
+
+    header {
+      min-height:86px; padding:14px 18px; border:1px solid rgba(255,255,255,.8);
+      background:rgba(255,255,255,.88); backdrop-filter:blur(14px);
+      box-shadow:0 16px 40px rgba(31,86,59,.13), inset 0 1px 0 #fff;
+    }
+    .brand-icon {
+      width:56px; height:56px; border-radius:18px; font-size:30px;
+      background:linear-gradient(145deg,#72d69d,#236a4d); border:2px solid rgba(255,255,255,.75);
+      box-shadow:0 8px 18px rgba(35,106,77,.28), inset 0 1px 5px rgba(255,255,255,.35);
+      transform:rotate(-3deg);
+    }
+    h1 { font-size:32px; text-shadow:0 2px 0 #fff; }
+    .top-toolbar { gap:9px; flex-wrap:wrap; justify-content:flex-end; }
+    .btn-tool {
+      min-height:42px; padding:9px 15px; border:1px solid #9ddab5; border-radius:14px;
+      background:linear-gradient(#fff,#effbf3); box-shadow:0 4px 10px rgba(36,104,75,.10);
+    }
+    .btn-tool:hover, .btn-tool.active { transform:translateY(-2px); box-shadow:0 7px 14px rgba(36,104,75,.2); }
+
+    .boss-arena {
+      position:relative; overflow:hidden; min-height:132px; padding:18px 24px;
+      border:2px solid #f5b62f; border-radius:26px;
+      background:radial-gradient(circle at 18% 30%,rgba(255,255,255,.95),rgba(255,244,189,.92) 35%,#ffd873 100%);
+      box-shadow:0 18px 35px rgba(154,104,0,.16), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .boss-arena::after { content:"BOSS BATTLE"; position:absolute; right:24px; top:10px; font:700 11px 'Fredoka'; letter-spacing:2.4px; color:rgba(166,98,0,.45); }
+    #bossSvgWrap { width:104px; height:104px; display:grid; place-items:center; border-radius:50%; background:rgba(255,255,255,.52); box-shadow:inset 0 0 0 2px rgba(245,159,0,.18),0 8px 18px rgba(132,85,0,.12); }
+    .boss-sprite-svg { width:92px; height:92px; filter:drop-shadow(0 9px 6px rgba(92,55,0,.18)); }
+    .boss-meta h3 { font-size:27px; color:#c96e00; text-shadow:0 2px 0 rgba(255,255,255,.8); }
+    .hp-container { height:20px; width:min(300px,36vw); border:2px solid #c97400; box-shadow:inset 0 2px 4px rgba(0,0,0,.12); }
+    .hp-fill { background:linear-gradient(90deg,#ff3f59,#ff745f); box-shadow:inset 0 2px 3px rgba(255,255,255,.3); }
+    .btn-class-raid { padding:13px 24px; border-radius:16px; background:linear-gradient(180deg,#ffb51d,#ed8c00); border:2px solid rgba(255,255,255,.55); box-shadow:0 8px 0 #b86700,0 12px 18px rgba(132,76,0,.2); transition:.15s ease; }
+    .btn-class-raid:hover { transform:translateY(-2px); filter:brightness(1.04); }
+    .btn-class-raid:active { transform:translateY(4px); box-shadow:0 4px 0 #b86700; }
+
+    .garden-grid { gap:18px; }
+    .plant-card {
+      min-height:224px; padding:16px 14px 15px; border:1px solid rgba(91,177,126,.34); border-radius:24px;
+      background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(247,255,249,.94));
+      box-shadow:0 10px 24px rgba(30,93,60,.10), inset 0 1px 0 #fff;
+    }
+    .plant-card::after { content:""; position:absolute; inset:auto 12px 10px 12px; height:38px; border-radius:50%; background:radial-gradient(ellipse,rgba(63,128,81,.08),transparent 68%); z-index:0; pointer-events:none; }
+    .plant-card:hover { transform:translateY(-6px) scale(1.015); box-shadow:0 17px 30px rgba(30,93,60,.16); }
+    .plant-card.top-rank { border:2px solid #f0b429; background:linear-gradient(180deg,#fffef7,#fff9d9); box-shadow:0 12px 28px rgba(202,142,0,.16); }
+    .rank-tag { display:block!important; top:9px; left:10px; padding:4px 8px; border-radius:999px; background:#fff2b5; color:#b26b00; font-size:10px; letter-spacing:.4px; }
+    .plant-svg-holder { width:112px; height:126px; margin-top:5px; z-index:1; filter:drop-shadow(0 8px 6px rgba(48,90,55,.14)); transition:transform .18s ease; }
+    .plant-card:hover .plant-svg-holder { transform:scale(1.05); }
+    .student-title-input { font-size:16px; padding:5px 7px; z-index:1; }
+    .hp-badge { z-index:1; margin-top:2px; padding:5px 12px; border:1px solid #b7e4c7; background:linear-gradient(#e8faed,#d6f2df); box-shadow:0 2px 5px rgba(35,106,77,.08); }
+
+    .modal-overlay { background:rgba(14,45,31,.72); backdrop-filter:blur(9px); }
+    .modal-box { max-width:500px; padding:28px; border:1px solid rgba(255,255,255,.8); border-radius:30px; background:linear-gradient(180deg,#fff,#f7fff9); box-shadow:0 28px 70px rgba(0,0,0,.34); }
+    .diff-row { background:#e9f7ee; padding:5px; border-radius:15px; gap:4px; width:max-content; margin:14px auto; box-shadow:inset 0 1px 3px rgba(31,86,59,.08); }
+    .chip-diff { min-width:88px; border:0; border-radius:11px; padding:8px 15px; background:transparent; transition:.15s ease; }
+    .chip-diff.active { background:#2d6a4f; box-shadow:0 4px 9px rgba(45,106,79,.25); }
+    .question-prompt { font-size:40px; margin:18px 0 12px; }
+    .input-field { width:170px; padding:10px; border:2px solid #9bd5b1; border-radius:15px; background:#fbfffc; box-shadow:inset 0 2px 6px rgba(32,90,60,.06); }
+    .input-field:focus { border-color:#2d6a4f; box-shadow:0 0 0 4px rgba(82,183,136,.16); }
+    .btn-act { min-height:48px; border-radius:15px; transition:.15s ease; }
+    .btn-water { background:linear-gradient(180deg,#59c28b,#329665); box-shadow:0 5px 0 #26744e; }
+    .btn-back { background:#eef1f0; }
+    .btn-act:hover { transform:translateY(-1px); filter:brightness(1.02); }
+
+    @media (max-width:720px) {
+      body{padding:10px} header{align-items:flex-start;gap:12px;flex-direction:column}.top-toolbar{width:100%}.btn-tool{flex:1}.boss-arena{align-items:stretch;gap:14px;flex-direction:column}.btn-class-raid{width:100%}.hp-container{width:min(250px,55vw)}.garden-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.plant-card{min-height:215px;padding:12px 8px}.boss-arena::after{display:none}
+    }
+
   </style>
 </head>
 <body>
@@ -322,249 +435,332 @@
     <div class="brand">
       <div class="brand-icon">&#127793;</div>
       <div>
-        <h1>Plant Growers</h1>
-        <div class="subtitle">By Will, Luca &amp; Odin &bull; Grow Your Plant &amp; Defeat the Bees!</div>
+        <h1>Plant Evolution</h1>
+        <div style="font-size:12px; color:#40916c; font-weight:700;">Rotating Bosses &bull; High-Level Math Challenges</div>
       </div>
+    </div>
+
+    <!-- Buttons from worksheet sketch: Add Player | Edit | Save -->
+    <div class="top-toolbar">
+      <button class="btn-tool" onclick="addNewPlayer()">&#10133; Add Player</button>
+      <button class="btn-tool" id="btnEdit" onclick="toggleEditMode()">✏️ Edit</button>
+      <button class="btn-tool" onclick="saveClassState()">💾 Save</button>
     </div>
   </header>
 
-  <!-- Subject Portals -->
-  <div class="portal-bar">
-    <button class="portal-btn active" id="portal-maths" onclick="switchSubject('Maths')">&#128290; Portal: Maths</button>
-    <button class="portal-btn" id="portal-spell" onclick="switchSubject('Spelling')">&#128218; Portal: Spelling</button>
-    <button class="portal-btn" id="portal-sci" onclick="switchSubject('Science')">&#9883; Portal: Science</button>
-  </div>
-
-  <!-- Giant Bee Boss Battle -->
+  <!-- Varying Boss Battle Screen -->
   <div class="boss-arena">
-    <div class="boss-left">
-      <svg class="bee-sprite" viewBox="0 0 100 100">
-        <!-- Bee Wings -->
-        <ellipse cx="40" cy="30" rx="16" ry="24" fill="#a0c4ff" opacity="0.7" transform="rotate(-30 40 30)"/>
-        <ellipse cx="60" cy="28" rx="14" ry="22" fill="#a0c4ff" opacity="0.7" transform="rotate(20 60 28)"/>
-        <!-- Bee Body & Stripes -->
-        <ellipse cx="50" cy="56" rx="28" ry="22" fill="#ffb703" stroke="#212529" stroke-width="3"/>
-        <path d="M 42 36 L 42 76 M 52 34 L 52 78 M 62 36 L 62 76" stroke="#212529" stroke-width="5" stroke-linecap="round"/>
-        <!-- Stinger -->
-        <polygon points="22,56 12,53 12,59" fill="#212529"/>
-        <!-- Eyes & Antenna -->
-        <circle cx="70" cy="50" r="5" fill="#ffffff"/>
-        <circle cx="72" cy="50" r="2.5" fill="#000"/>
-        <path d="M 68 40 Q 75 30 80 32" stroke="#212529" stroke-width="2.5" fill="none"/>
-      </svg>
+    <div class="boss-info-side">
+      <div id="bossSvgWrap"></div>
       <div class="boss-meta">
-        <h3 id="bossTitle">QUEEN BUZZ-BEE (BOSS)</h3>
-        <div class="hp-bar-container">
-          <div class="hp-bar-fill" id="bossHpFill"></div>
+        <h3 id="bossTitleText">QUEEN BUZZ-BEE</h3>
+        <div class="hp-container">
+          <div class="hp-fill" id="bossHpFill"></div>
         </div>
-        <div style="font-size: 13px; font-weight: 700; color: #b06200; margin-top: 4px;" id="bossHpText">HP: 100 / 100</div>
+        <div style="font-size:12px; font-weight:700; color:#b06200; margin-top:4px;" id="bossHpText">
+          HP: 75 / 75
+        </div>
       </div>
     </div>
-    <button class="boss-btn" onclick="startClassBattle()">&#9876; CLASS ATTACK!</button>
+    <button class="btn-class-raid" onclick="startClassRaid()">&#9876; CLASS ATTACK!</button>
   </div>
 
-  <!-- Garden Plant Grid -->
+  <!-- Garden Grid (Automatically sorts top of the class to the front) -->
   <main class="garden-grid" id="gardenGrid"></main>
 
   <!-- Challenge Modal -->
   <div class="modal-overlay" id="quizModal">
     <div class="modal-box">
-      <h2 id="modalStudent" style="margin: 0; color: var(--primary-green); font-size: 24px;"></h2>
-      <p style="color: #52b788; margin: 4px 0 0 0;" id="modalSubjectSub">Solve the question to grow your plant &amp; sting the bee!</p>
-
-      <div class="q-text" id="qPrompt">30 + 25 = ?</div>
-      <input type="text" id="answerInput" class="input-box" autocomplete="off">
-
-      <div class="actions">
-        <button class="btn-act btn-cancel" onclick="closeModal()">Back</button>
-        <button class="btn-act btn-submit" onclick="checkAnswer()">Water &amp; Attack!</button>
+      <h2 id="modalStudentName" style="margin: 0; color: var(--primary-green); font-size: 22px;"></h2>
+      
+      <!-- Difficulty Pickers (Hard, Easy, Medium picked by player) -->
+      <div class="diff-row">
+        <button class="chip-diff" id="diff-easy" onclick="setDiff('easy')">Easy</button>
+        <button class="chip-diff active" id="diff-med" onclick="setDiff('med')">Medium</button>
+        <button class="chip-diff" id="diff-hard" onclick="setDiff('hard')">Hard</button>
       </div>
 
-      <div class="feedback-zone" id="fbZone"></div>
+      <div style="font-size:12px; color:#52b788; font-weight:700;" id="qCategory">Plant Growth Problem</div>
+      <div class="question-prompt" id="promptText">45 + 35 = ?</div>
+      <input type="number" id="mathAnswerIn" class="input-field" autocomplete="off" placeholder="?">
+
+      <div class="btn-act-row">
+        <button class="btn-act btn-back" onclick="closeModal()">Back</button>
+        <button class="btn-act btn-water" onclick="submitWatering()">Water &amp; Attack!</button>
+      </div>
+
+      <div class="fb-zone" id="feedbackZone"></div>
     </div>
   </div>
 
   <script>
-    let currentSubject = "Maths";
-    let bossHp = 100;
-    const maxBossHp = 100;
-    let activeStudent = null;
-    let expectedAnswer = "";
-
-    const students = [
-      { id: 1, name: "Will", hp: 30, warnings: 0, flowerColor: "#ff4d6d" },
-      { id: 2, name: "Luca", hp: 28, warnings: 0, flowerColor: "#ffd166" },
-      { id: 3, name: "Odin", hp: 25, warnings: 0, flowerColor: "#06d6a0" },
-      { id: 4, name: "Student 1", hp: 19, warnings: 0, flowerColor: "#8338ec" },
-      { id: 5, name: "Student 2", hp: 21, warnings: 0, flowerColor: "#ff758f" },
-      { id: 6, name: "Student 3", hp: 23, warnings: 0, flowerColor: "#3a86ff" }
+    // Rotating Boss Roster
+    const bosses = [
+      {
+        name: "QUEEN BUZZ-BEE",
+        maxHp: 75,
+        svg: `<svg class="boss-sprite-svg" viewBox="0 0 100 100">
+                <ellipse cx="40" cy="30" rx="16" ry="24" fill="#a0c4ff" opacity="0.7" transform="rotate(-30 40 30)"/>
+                <ellipse cx="60" cy="28" rx="14" ry="22" fill="#a0c4ff" opacity="0.7" transform="rotate(20 60 28)"/>
+                <ellipse cx="50" cy="56" rx="28" ry="22" fill="#ffb703" stroke="#212529" stroke-width="3"/>
+                <path d="M 42 36 L 42 76 M 52 34 L 52 78 M 62 36 L 62 76" stroke="#212529" stroke-width="5" stroke-linecap="round"/>
+                <polygon points="22,56 12,53 12,59" fill="#212529"/>
+                <circle cx="70" cy="50" r="5" fill="#fff"/><circle cx="72" cy="50" r="2.5" fill="#000"/>
+              </svg>`
+      },
+      {
+        name: "MECHA HORNET",
+        maxHp: 100,
+        svg: `<svg class="boss-sprite-svg" viewBox="0 0 100 100">
+                <polygon points="30,20 45,35 25,40" fill="#00b4d8" opacity="0.8"/>
+                <polygon points="70,20 55,35 75,40" fill="#00b4d8" opacity="0.8"/>
+                <polygon points="50,30 76,55 68,75 32,75 24,55" fill="#e63946" stroke="#111" stroke-width="3"/>
+                <line x1="30" y1="55" x2="70" y2="55" stroke="#ffd166" stroke-width="4"/>
+                <circle cx="50" cy="48" r="6" fill="#00f0ff"/>
+                <polygon points="50,75 46,92 54,92" fill="#111"/>
+              </svg>`
+      },
+      {
+        name: "MEGA MANTIS",
+        maxHp: 125,
+        svg: `<svg class="boss-sprite-svg" viewBox="0 0 100 100">
+                <ellipse cx="50" cy="55" rx="20" ry="32" fill="#38b000" stroke="#004b23" stroke-width="3"/>
+                <circle cx="50" cy="24" r="14" fill="#70e000" stroke="#004b23" stroke-width="2"/>
+                <circle cx="44" cy="22" r="4" fill="#000"/><circle cx="56" cy="22" r="4" fill="#000"/>
+                <path d="M 35 45 Q 15 30 25 70" stroke="#38b000" stroke-width="6" fill="none" stroke-linecap="round"/>
+                <path d="M 65 45 Q 85 30 75 70" stroke="#38b000" stroke-width="6" fill="none" stroke-linecap="round"/>
+              </svg>`
+      }
     ];
 
-    // SVG Plant that evolves based on HP (sprout -> bud -> big flower)
-    function renderPlantSVG(hp, flowerColor) {
-      let plantTop = "";
-      if (hp < 20) {
-        // Stage 1: Little Sprout
-        plantTop = `
-          <path d="M 50 78 Q 45 60 50 48" stroke="#52b788" stroke-width="5" fill="none" stroke-linecap="round"/>
-          <ellipse cx="44" cy="50" rx="8" ry="4" fill="#52b788" transform="rotate(-30 44 50)"/>
-          <ellipse cx="56" cy="46" rx="8" ry="4" fill="#52b788" transform="rotate(30 56 46)"/>
-        `;
-      } else if (hp < 26) {
-        // Stage 2: Tall Stem with Bud
-        plantTop = `
-          <path d="M 50 78 Q 44 55 50 36" stroke="#52b788" stroke-width="6" fill="none" stroke-linecap="round"/>
-          <ellipse cx="38" cy="54" rx="10" ry="5" fill="#52b788" transform="rotate(-35 38 54)"/>
-          <ellipse cx="62" cy="50" rx="10" ry="5" fill="#52b788" transform="rotate(35 62 50)"/>
-          <!-- Bud -->
-          <circle cx="50" cy="30" r="10" fill="${flowerColor}" />
-        `;
-      } else {
-        // Stage 3: Full Flower (from the boys' Boss Screen sketch)
-        plantTop = `
-          <path d="M 50 78 Q 42 50 50 30" stroke="#52b788" stroke-width="6" fill="none" stroke-linecap="round"/>
-          <ellipse cx="36" cy="56" rx="11" ry="6" fill="#52b788" transform="rotate(-35 36 56)"/>
-          <ellipse cx="64" cy="50" rx="11" ry="6" fill="#52b788" transform="rotate(35 64 50)"/>
-          <!-- Petals -->
-          <circle cx="42" cy="22" r="8" fill="${flowerColor}" />
-          <circle cx="58" cy="22" r="8" fill="${flowerColor}" />
-          <circle cx="50" cy="14" r="8" fill="${flowerColor}" />
-          <circle cx="50" cy="30" r="8" fill="${flowerColor}" />
-          <!-- Center Face -->
-          <circle cx="50" cy="22" r="7" fill="#ffe494" />
-          <circle cx="48" cy="21" r="1.5" fill="#333" /><circle cx="52" cy="21" r="1.5" fill="#333" />
-        `;
-      }
+    let currentBossIdx = 0;
+    let bossCurrentHp = 75;
 
+    // Generic Student Plant List
+    let students = [
+      { id: 1, name: "Student 1", hp: 30, warnings: 0, flowerColor: "#ff4d6d" },
+      { id: 2, name: "Student 2", hp: 28, warnings: 0, flowerColor: "#ffd166" },
+      { id: 3, name: "Student 3", hp: 26, warnings: 0, flowerColor: "#06d6a0" },
+      { id: 4, name: "Student 4", hp: 20, warnings: 1, flowerColor: "#8338ec" },
+      { id: 5, name: "Student 5", hp: 19, warnings: 0, flowerColor: "#ff758f" },
+      { id: 6, name: "Student 6", hp: 15, warnings: 2, flowerColor: "#3a86ff" }
+    ];
+
+    let isEditMode = false;
+    let activeStudent = null;
+    let currentDifficulty = 'med';
+    let expectedAnswer = 0;
+
+    // Multiple Evolution Stages: Sprout -> Bud -> Blooming -> Golden Mythic
+    function renderEvolvedPlant(hp, warnings, color) {
+      const isWilting = warnings > 0;
+      const stemColor = isWilting ? "#808a5e" : "#52b788";
+
+      if (hp < 18) {
+        // Stage 1: Sprout
+        return `
+          <svg viewBox="0 0 100 115" width="90" height="105">
+            <path d="M 50 80 Q ${isWilting ? '40' : '45'} 65 50 52" stroke="${stemColor}" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <ellipse cx="44" cy="54" rx="7" ry="4" fill="${stemColor}" transform="rotate(-30 44 54)"/>
+            <ellipse cx="56" cy="50" rx="7" ry="4" fill="${stemColor}" transform="rotate(30 56 50)"/>
+            ${renderPot(hp, warnings)}
+          </svg>`;
+      } else if (hp < 25) {
+        // Stage 2: Tall Vine with Bud
+        return `
+          <svg viewBox="0 0 100 115" width="90" height="105">
+            <path d="M 50 80 Q ${isWilting ? '38' : '44'} 55 50 36" stroke="${stemColor}" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <circle cx="50" cy="30" r="10" fill="${color}" />
+            ${renderPot(hp, warnings)}
+          </svg>`;
+      } else if (hp < 32) {
+        // Stage 3: Blooming Flower
+        return `
+          <svg viewBox="0 0 100 115" width="90" height="105">
+            <path d="M 50 80 Q 42 50 50 30" stroke="${stemColor}" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <circle cx="42" cy="22" r="8" fill="${color}" />
+            <circle cx="58" cy="22" r="8" fill="${color}" />
+            <circle cx="50" cy="14" r="8" fill="${color}" />
+            <circle cx="50" cy="30" r="8" fill="${color}" />
+            <circle cx="50" cy="22" r="7" fill="#ffe494" />
+            ${renderPot(hp, warnings)}
+          </svg>`;
+      } else {
+        // Stage 4: Mega Golden Bloom
+        return `
+          <svg viewBox="0 0 100 115" width="90" height="105">
+            <path d="M 50 80 Q 44 45 50 25" stroke="#2d6a4f" stroke-width="7" fill="none" stroke-linecap="round"/>
+            <circle cx="50" cy="22" r="20" fill="#ffd166" stroke="#ff9f1c" stroke-width="3"/>
+            <circle cx="50" cy="22" r="9" fill="#fff"/>
+            <text x="50" y="26" font-size="12" text-anchor="middle">👑</text>
+            ${renderPot(hp, warnings)}
+          </svg>`;
+      }
+    }
+
+    function renderPot(hp, warnings) {
+      const potFill = warnings >= 2 ? "#9e5338" : "#d97736";
       return `
-        <svg viewBox="0 0 100 115" width="95" height="110">
-          ${plantTop}
-          <!-- Flowerpot labeled with HP like in their sketch -->
-          <polygon points="28,78 72,78 66,110 34,110" fill="#d97736" stroke="#b0571f" stroke-width="2"/>
-          <rect x="25" y="74" width="50" height="7" rx="3" fill="#e88544" stroke="#b0571f" stroke-width="2"/>
-          <text x="50" y="98" font-family="'Fredoka', sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">${hp} HP</text>
-        </svg>
+        <polygon points="28,80 72,80 66,110 34,110" fill="${potFill}" stroke="#8f4111" stroke-width="2"/>
+        <rect x="25" y="76" width="50" height="7" rx="3" fill="#e88544" stroke="#8f4111" stroke-width="2"/>
+        <text x="50" y="99" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">${hp} HP</text>
       `;
     }
 
+    // Sorts Top of Class to Front
     function renderGarden() {
+      students.sort((a, b) => b.hp - a.hp);
       const grid = document.getElementById('gardenGrid');
       grid.innerHTML = '';
 
-      students.forEach(s => {
+      students.forEach((s, idx) => {
         const card = document.createElement('div');
-        card.className = 'plant-card';
-        card.onclick = () => openChallenge(s);
+        card.className = `plant-card ${idx === 0 ? 'top-rank' : ''}`;
 
         card.innerHTML = `
-          <div class="plant-svg-wrap">
-            ${renderPlantSVG(s.hp, s.flowerColor)}
+          <span class="rank-tag">👑 #1 TOP OF CLASS</span>
+          <div class="plant-svg-holder" onclick="openQuiz(${s.id})">
+            ${renderEvolvedPlant(s.hp, s.warnings, s.flowerColor)}
           </div>
-          <div class="student-name">${s.name}</div>
-          <div class="pill-hp">&#9752; ${s.hp} Growth HP</div>
+          <input type="text" class="student-title-input ${isEditMode ? 'editable' : ''}" 
+                 value="${s.name}" 
+                 ${isEditMode ? '' : 'readonly'}
+                 onchange="renameStudent(${s.id}, this.value)">
+          <div class="hp-badge" onclick="openQuiz(${s.id})">🌱 ${s.hp} HP ${s.warnings > 0 ? `(⚠️ ${s.warnings})` : ''}</div>
         `;
         grid.appendChild(card);
       });
     }
 
-    function switchSubject(subject) {
-      currentSubject = subject;
-      document.querySelectorAll('.portal-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent.includes(subject));
-      });
+    function toggleEditMode() {
+      isEditMode = !isEditMode;
+      const btn = document.getElementById('btnEdit');
+      btn.classList.toggle('active', isEditMode);
+      btn.textContent = isEditMode ? '💾 Done Editing' : '✏️ Edit';
+      renderGarden();
     }
 
-    function openChallenge(student) {
-      activeStudent = student;
-      document.getElementById('modalStudent').textContent = `${student.name}'s Plant Challenge`;
-      document.getElementById('modalSubjectSub').textContent = `Portal: ${currentSubject} • Correct answer damages the Bee!`;
-      document.getElementById('fbZone').textContent = '';
-      document.getElementById('answerInput').value = '';
+    function renameStudent(id, newName) {
+      const s = students.find(x => x.id === id);
+      if (s && newName.trim()) s.name = newName.trim();
+    }
 
-      setupQuestion();
+    function addNewPlayer() {
+      const nextId = students.length + 1;
+      students.push({
+        id: nextId,
+        name: `Student ${nextId}`,
+        hp: 15,
+        warnings: 0,
+        flowerColor: "#ff9f1c"
+      });
+      renderGarden();
+    }
+
+    function saveClassState() {
+      alert("💾 Class garden state and HP saved successfully!");
+    }
+
+    function updateBossUI() {
+      const b = bosses[currentBossIdx];
+      document.getElementById('bossSvgWrap').innerHTML = b.svg;
+      document.getElementById('bossTitleText').textContent = b.name;
+      const pct = (bossCurrentHp / b.maxHp) * 100;
+      document.getElementById('bossHpFill').style.width = `${pct}%`;
+      document.getElementById('bossHpText').textContent = `HP: ${bossCurrentHp} / ${b.maxHp}`;
+    }
+
+    function setDiff(diff) {
+      currentDifficulty = diff;
+      document.getElementById('diff-easy').classList.toggle('active', diff === 'easy');
+      document.getElementById('diff-med').classList.toggle('active', diff === 'med');
+      document.getElementById('diff-hard').classList.toggle('active', diff === 'hard');
+      generateMathQuestion();
+    }
+
+    function openQuiz(studentId) {
+      activeStudent = students.find(x => x.id === studentId);
+      document.getElementById('modalStudentName').textContent = `${activeStudent.name}'s Growth Challenge`;
+      document.getElementById('feedbackZone').textContent = '';
+      document.getElementById('mathAnswerIn').value = '';
+      generateMathQuestion();
       document.getElementById('quizModal').classList.add('active');
-      setTimeout(() => document.getElementById('answerInput').focus(), 100);
+      setTimeout(() => document.getElementById('mathAnswerIn').focus(), 80);
     }
 
     function closeModal() {
       document.getElementById('quizModal').classList.remove('active');
     }
 
-    function setupQuestion() {
-      if (currentSubject === "Maths") {
-        // Maths like in their sketch: 30 + 25 = ?
-        const n1 = (Math.floor(Math.random() * 4) + 1) * 10;
-        const n2 = Math.floor(Math.random() * 25) + 10;
-        expectedAnswer = (n1 + n2).toString();
-        document.getElementById('qPrompt').textContent = `${n1} + ${n2} = ?`;
-      } else if (currentSubject === "Spelling") {
-        const words = [
-          { clue: "Opposite of cold", ans: "hot" },
-          { clue: "A yellow buzzing bug", ans: "bee" },
-          { clue: "Plants grow in...", ans: "soil" },
-          { clue: "What gives plants light?", ans: "sun" }
-        ];
-        const chosen = words[Math.floor(Math.random() * words.length)];
-        expectedAnswer = chosen.ans.toLowerCase();
-        document.getElementById('qPrompt').textContent = chosen.clue;
-      } else { // Science
-        const sci = [
-          { q: "Do plants need sunlight? (yes/no)", ans: "yes" },
-          { q: "What do bees collect? (pollen/juice)", ans: "pollen" }
-        ];
-        const chosen = sci[Math.floor(Math.random() * sci.length)];
-        expectedAnswer = chosen.ans.toLowerCase();
-        document.getElementById('qPrompt').textContent = chosen.q;
+    // Plant-Themed Harder Questions
+    function generateMathQuestion() {
+      let a, b;
+      if (currentDifficulty === 'easy') {
+        document.getElementById('qCategory').textContent = '🌱 Sprout Math: Sunlight Hours';
+        a = Math.floor(Math.random() * 25) + 10;
+        b = Math.floor(Math.random() * 25) + 10;
+        expectedAnswer = a + b;
+        document.getElementById('promptText').textContent = `${a} + ${b} = ?`;
+      } else if (currentDifficulty === 'med') {
+        document.getElementById('qCategory').textContent = '🌿 Garden Bed: Water Liter Calculation';
+        a = Math.floor(Math.random() * 55) + 30;
+        b = Math.floor(Math.random() * 25) + 12;
+        expectedAnswer = a - b;
+        document.getElementById('promptText').textContent = `${a} - ${b} = ?`;
+      } else {
+        document.getElementById('qCategory').textContent = '🌻 Super Bloom: Plant Cell Multiplier';
+        const tables = [4, 6, 7, 8, 9, 12];
+        a = tables[Math.floor(Math.random() * tables.length)];
+        b = Math.floor(Math.random() * 8) + 3;
+        expectedAnswer = a * b;
+        document.getElementById('promptText').textContent = `${a} × ${b} = ?`;
       }
     }
 
-    function checkAnswer() {
-      const val = document.getElementById('answerInput').value.trim().toLowerCase();
-      const fb = document.getElementById('fbZone');
-
-      if (!val) return;
+    function submitWatering() {
+      const val = parseInt(document.getElementById('mathAnswerIn').value, 10);
+      const fb = document.getElementById('feedbackZone');
+      if (isNaN(val)) return;
 
       if (val === expectedAnswer) {
-        // Feed plant & damage bee
         activeStudent.hp += 3;
-        bossHp = Math.max(0, bossHp - 15);
+        bossCurrentHp = Math.max(0, bossCurrentHp - 15);
+        fb.className = 'fb-zone good';
+        fb.textContent = '🌟 Plant Watered! +3 HP and dealt 15 DMG to the Boss!';
         updateBossUI();
         renderGarden();
 
-        fb.className = 'feedback-zone good';
-        fb.textContent = 'Plant watered! +3 Growth HP and dealt 15 DMG to the Bee!';
-        setTimeout(closeModal, 1200);
+        if (bossCurrentHp <= 0) {
+          setTimeout(() => {
+            alert(`🎉 ${bosses[currentBossIdx].name} DEFEATED! A stronger boss has arrived!`);
+            currentBossIdx = (currentBossIdx + 1) % bosses.length;
+            bossCurrentHp = bosses[currentBossIdx].maxHp;
+            updateBossUI();
+            closeModal();
+          }, 600);
+        } else {
+          setTimeout(closeModal, 1000);
+        }
       } else {
         activeStudent.warnings++;
-        fb.className = 'feedback-zone bad';
-        fb.textContent = `Oops! The answer was: ${expectedAnswer}`;
-        setTimeout(closeModal, 1500);
+        fb.className = 'fb-zone bad';
+        fb.textContent = `❌ Plant wilted from overwatering! Warning added! (Answer: ${expectedAnswer})`;
+        renderGarden();
+        setTimeout(closeModal, 1400);
       }
     }
 
-    function updateBossUI() {
-      const fill = document.getElementById('bossHpFill');
-      const pct = (bossHp / maxBossHp) * 100;
-      fill.style.width = `${pct}%`;
-      document.getElementById('bossHpText').textContent = `HP: ${bossHp} / ${maxBossHp}`;
-
-      if (bossHp === 0) {
-        document.getElementById('bossTitle').textContent = '🎉 BOSS BEE DEFEATED! 🎉';
-      }
+    function startClassRaid() {
+      const rand = students[Math.floor(Math.random() * students.length)];
+      openQuiz(rand.id);
     }
 
-    function startClassBattle() {
-      // Quick all-student team trigger
-      const randStudent = students[Math.floor(Math.random() * students.length)];
-      openChallenge(randStudent);
-    }
-
-    document.getElementById('answerInput').addEventListener('keyup', (e) => {
-      if (e.key === 'Enter') checkAnswer();
+    document.getElementById('mathAnswerIn').addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') submitWatering();
     });
 
-    renderGarden();
     updateBossUI();
+    renderGarden();
   </script>
 </body>
 </html>
